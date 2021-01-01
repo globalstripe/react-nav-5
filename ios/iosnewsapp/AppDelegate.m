@@ -108,4 +108,28 @@ static void InitializeFlipper(UIApplication *application) {
                     restorationHandler:restorationHandler];
 }
 
+
+//#import <AVFoundation/AVFoundation.h>  // import
+
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];  // allow
+//}
+
+#import <AVFoundation/AVFoundation.h>  // import
+#import <AudioToolbox/AudioToolbox.h>
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+
+  // Play Audio in Silent Mode  
+  AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+
+NSError *setCategoryErr = nil;
+NSError *activationErr = nil;
+[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryErr];
+[[AVAudioSession sharedInstance] setActive:YES error:&activationErr];
+
+}
+
 @end
