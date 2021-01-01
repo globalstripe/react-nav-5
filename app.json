@@ -1,0 +1,12 @@
+{
+  "name": "ios-news-app",
+  "displayName": "ios-news-app",
+  "expo": {
+    "name": "ios-news-app",
+    "slug": "ios-news-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
