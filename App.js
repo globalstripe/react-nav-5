@@ -15,7 +15,13 @@ import {
 } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+
+import { 
+  createStackNavigator, 
+  TransitionSpecs,
+  TransitionPresets
+  } 
+from '@react-navigation/stack';
 
 import { WebView } from 'react-native-webview';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -23,9 +29,25 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 // import Video from 'react-native-video';
 import { Audio, Video } from 'expo-av';
 
+import { BlurView } from 'expo-blur';
+
 //import Banner from './Banner'
 //import Row from './Row'
 //import requests from './requests'
+
+// Transition/Anomation Config
+
+const config = {
+  animation: 'spring',
+  config: {
+    stiffness: 150,
+    damping: 100,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
 
 function HomeScreen({ navigation }) {
   return (
@@ -58,7 +80,7 @@ function DetailsScreen({route, navigation }) {
   const { itemId, otherParam } = route.params;
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
+    <View style={styles.top}>
       <Text>Details Screen</Text>
       
       <TouchableHighlight onPress={() => navigation.navigate('Video')}>
@@ -82,7 +104,7 @@ function DetailsScreen({route, navigation }) {
 
 function ProfileScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Text>Profile Screen</Text>
       <Button title="Go to Home" onPress={() => navigation.navigate('Home')}/> 
       <Button title="Go back" onPress={() => navigation.goBack()} />
@@ -97,7 +119,7 @@ function ProfileScreen({ navigation }) {
 function VideoScreen({ navigation }) {
   return (
 
- <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+  <View style={styles.container}>
 
  <Text>Todays Video</Text>
  <TouchableOpacity onPress={() => navigation.navigate('Tears')}>
@@ -147,7 +169,8 @@ function TearsVideo({ navigation }) {
 
   return (
 
- <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+<View style={styles.top}>
 
  <Text>Apple HLS Video</Text>
  <TouchableOpacity onPress={() => navigation.navigate('Home')}>
@@ -197,7 +220,7 @@ function RTENews({ navigation }) {
 
   return (
 
- <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+ <View style={styles.top}>
 
  <Text>Apple HLS - Live</Text>
 
@@ -284,12 +307,48 @@ export default class App extends React.Component {
   return (
     <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+
+          <Stack.Screen name="Home" component={HomeScreen} 
+            options={{
+              headerTransparent: true,
+              headerShown: false,
+              headerBackground: () => (
+                <BlurView tint="light" intensity={20} style={StyleSheet.absoluteFill} />
+              ),
+              headerStyle: {height: 80 }, // Specify the height of your custom header
+              transitionSpec: {open: config, close: config}
+            }}/>
+
           <Stack.Screen name="Details" component={DetailsScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Video" component={VideoScreen} />
-          <Stack.Screen name="Tears" component={TearsVideo} />
-          <Stack.Screen name="News" component={RTENews} />
+          <Stack.Screen name="Profile" component={ProfileScreen} 
+               options={{
+                title: 'Profile',
+                ...TransitionPresets.ModalSlideFromBottomIOS,
+              }}
+          />
+          <Stack.Screen name="Video" component={VideoScreen}
+            options={{
+              transitionSpec: {
+                open: TransitionSpecs.TransitionIOSSpec,
+                close: TransitionSpecs.TransitionIOSSpec,
+              },
+            }} />
+          <Stack.Screen name="Tears" component={TearsVideo} 
+                     options={{
+                      title: 'Profile',
+                      ...TransitionPresets.ModalSlideFromBottomIOS,
+                    }}
+          />
+          <Stack.Screen name="News" component={RTENews} 
+           options={{
+            headerTransparent: true,
+            headerShown: true,
+            headerBackground: () => (
+              <BlurView tint="light" intensity={20} style={StyleSheet.absoluteFill} />
+            ),
+            headerStyle: {height: 80 }, // Specify the height of your custom header
+            transitionSpec: {open: config, close: config}
+          }}/>
 
       </Stack.Navigator>
     </NavigationContainer>
@@ -297,10 +356,8 @@ export default class App extends React.Component {
   }
 }
 
-
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-
 
 
 const styles = StyleSheet.create({
@@ -309,8 +366,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     color: '#f44336',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    paddingTop: '20%'
   },
+
+  top: { flex: 1, 
+    alignItems: 'center', 
+    backgroundColor: '#000',
+    color: '#f44336',
+    paddingTop: '3%'
+  },
+
   statusBar: {
     height: STATUSBAR_HEIGHT,
   },
