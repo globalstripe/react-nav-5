@@ -20,6 +20,8 @@ target 'iosnewsapp' do
    use_flipper!
    pod 'react-native-video', :path => '../node_modules/react-native-video'
 
+   pod 'Google-Mobile-Ads-SDK'
+
    post_install do |installer|
      flipper_post_install(installer)
    end

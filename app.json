@@ -5,6 +5,13 @@
     "name": "ios-news-app",
     "slug": "ios-news-app",
     "version": "1.0.0",
+    "orientation": "portrit",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image" : "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+     },
     "assetBundlePatterns": [
       "**/*"
     ]

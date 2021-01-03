@@ -12,6 +12,8 @@ import {
   View,
   TouchableHighlight,
   TouchableOpacity, 
+  SafeAreaView, 
+  ScrollView 
 } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -30,6 +32,16 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import { Audio, Video } from 'expo-av';
 
 import { BlurView } from 'expo-blur';
+
+import NativeAdView, {
+  CallToActionView,
+  IconView,
+  HeadlineView,
+  TaglineView,
+  AdvertiserView,
+  AdBadge,
+} from "react-native-admob-native-ads";
+
 
 //import Banner from './Banner'
 //import Row from './Row'
@@ -51,6 +63,10 @@ const config = {
 
 function HomeScreen({ navigation }) {
   return (
+    < SafeAreaView>
+    <ScrollView style={styles.scrollView}>
+
+ 
   <View style={styles.container}>
    
     <Text style={[styles.setFontSize,styles.setColorWhite]}>Home Screen</Text>
@@ -67,11 +83,24 @@ function HomeScreen({ navigation }) {
     <Button title="Go to Profile" onPress={() => navigation.navigate('Profile')}/> 
     <Button title="Videos" onPress={() => navigation.navigate('Video')}/> 
     <Button title="Tears" onPress={() => navigation.navigate('Tears')}/> 
-    <Button title="RTE News Now!" onPress={() => navigation.navigate('News')}/> 
+    <Button title="RTE News Now!" onPress={() => navigation.navigate('News')}/>       
+
+    <Text style={styles.text}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
 
     <StatusBar style='auto' />
 
+
   </View>
+  </ScrollView>
+  </SafeAreaView>
   );
 }
 
@@ -119,6 +148,9 @@ function ProfileScreen({ navigation }) {
 function VideoScreen({ navigation }) {
   return (
 
+    < SafeAreaView>
+    <ScrollView style={styles.scrollView}>
+
   <View style={styles.container}>
 
  <Text>Todays Video</Text>
@@ -130,11 +162,75 @@ function VideoScreen({ navigation }) {
   volume={1.0}
   isMuted={false}
   resizeMode="cover"
-  shouldPlay
+  shouldPlay={false}
   isLooping
   style={{ width: 440, height: 300 }}
  />
  </TouchableOpacity>
+
+
+ <View
+  style={{
+    borderBottomColor: 'gray',
+    borderBottomWidth: 20,
+  }}
+/>
+
+ <TouchableOpacity onPress={() => navigation.navigate('Tears')}>
+
+<Video
+ source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+ rate={1.0}
+ volume={1.0}
+ isMuted={false}
+ resizeMode="cover"
+ shouldPlay={false}
+ isLooping
+ style={{ width: 440, height: 300 }}
+/>
+</TouchableOpacity>
+
+<View
+  style={{
+    borderBottomColor: 'gray',
+    borderBottomWidth: 20,
+  }}
+/>
+
+<TouchableOpacity onPress={() => navigation.navigate('Tears')}>
+
+<Video
+ source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+ rate={1.0}
+ volume={1.0}
+ isMuted={false}
+ resizeMode="cover"
+ shouldPlay={false}
+ isLooping
+ style={{ width: 440, height: 300 }}
+/>
+</TouchableOpacity>
+
+<View
+  style={{
+    borderBottomColor: 'gray',
+    borderBottomWidth: 20,
+  }}
+/>
+
+<TouchableOpacity onPress={() => navigation.navigate('Tears')}>
+
+<Video
+ source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+ rate={1.0}
+ volume={1.0}
+ isMuted={false}
+ resizeMode="cover"
+ shouldPlay={false}
+ isLooping
+ style={{ width: 440, height: 300 }}
+/>
+</TouchableOpacity>
         
      {//   <WebView
       //  originWhitelist={['*']}
@@ -150,6 +246,9 @@ function VideoScreen({ navigation }) {
         onPress={() => navigation.popToTop()}
       />
     </View>
+    </ScrollView>
+    </SafeAreaView>
+   
   );
 }
 
@@ -426,6 +525,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
-
+  scrollView: {
+    backgroundColor: 'black',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 32,
+    color: '#ffffff'
+  }
 });
 
